@@ -1,5 +1,6 @@
 import express from 'express';
 import { genres, genreDetails } from './genresData';
+import Genre from './genresModel';
 import uniqid from 'uniqid'
 
 const router = express.Router(); 
@@ -18,6 +19,12 @@ router.get('/:id', (req, res) => {
             status_code: 404
         });
     }
+});
+
+// Get genre 
+router.get('/', async (req, res) => {
+    const genres = await Genre.find();
+    res.status(200).json(genres);
 });
 
 export default router;
