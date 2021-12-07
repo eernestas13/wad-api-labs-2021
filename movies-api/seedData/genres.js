@@ -16,3 +16,4 @@ const genres= [
         "name": "Comedy"
     }
 ]
+export default genres;
