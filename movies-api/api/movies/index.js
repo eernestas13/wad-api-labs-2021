@@ -5,6 +5,9 @@ import { movies, movieReviews, movieDetails } from './moviesData';
 import uniqid from 'uniqid'
 import { getUpcomingMovies } from './tmdb-api';
 import { getMovies } from './tmdb-api';
+import { getPopularMovies } from './tmdb-api';
+import { getTopRatedMovies } from './tmdb-api';
+import { getNowPlayingMovies } from './tmdb-api';
 
 const router = express.Router(); 
 
@@ -57,6 +60,21 @@ router.get('/tmdb/upcoming', asyncHandler( async(req, res) => {
   router.get('/tmdb/movies', asyncHandler( async(req, res) => {
     const Movies = await getMovies();
     res.status(200).json(Movies);
+  }));
+
+  router.get('/tmdb/popular', asyncHandler( async(req, res) => {
+    const Popular = await getPopularMovies();
+    res.status(200).json(Popular);
+  }));
+
+  router.get('/tmdb/toprated', asyncHandler( async(req, res) => {
+    const TopRated = await getTopRatedMovies();
+    res.status(200).json(TopRated);
+  }));
+
+  router.get('/tmdb/nowplaying', asyncHandler( async(req, res) => {
+    const NowPlaying = await getNowPlayingMovies();
+    res.status(200).json(NowPlaying);
   }));
 
 //Post a movie review
