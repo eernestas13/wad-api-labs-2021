@@ -19,6 +19,13 @@ router.get('/:userName/favourites', asyncHandler( async (req, res) => {
     res.status(200).json(user.favourites);
   }));
 
+  // Get Watchlists
+router.get('/:userName/watchlists', asyncHandler( async (req, res) => {
+  const userName = req.params.userName;
+  const user = await User.findByUserName(userName).populate('watchlists');
+  res.status(200).json(user.watchlists);
+}));
+
 // Register OR authenticate a user
 router.post('/',asyncHandler( async (req, res, next) => {
     if (!req.body.username || !req.body.password) {
@@ -82,5 +89,26 @@ router.post('/:userName/favourites', asyncHandler(async (req, res) => {
     });
 }
   }));
+
+  //Add a watchlist item.
+router.post('/:userName/watchlists', asyncHandler(async (req, res) => {
+  const newWatchlist = req.body.id;
+  const userName = req.params.userName;
+  const movie = await movieModel.findByMovieDBId(newWatchlist);
+  const user = await User.findByUserName(userName);
+  if (newFavourite.id == id) {
+  req.body.created_at = new Date();
+  req.body.updated_at = new Date();
+  req.body.id = uniqid();
+  await user.watchlists.push(movie._id); //push the new watchlist onto the list
+  await user.save(); 
+  res.status(201).json(req.body);
+} else {
+  res.status(404).json({
+      message: 'The resource you requested could not be found.',
+      status_code: 404
+  });
+}
+}));
 
 export default router;
